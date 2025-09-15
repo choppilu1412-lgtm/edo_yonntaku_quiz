@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>江戸時代クイズ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="robots" content="index, follow">
+  <meta name="description" content="江戸時代に関する四択クイズを出題‼。">
+  <meta name="keywords" content="江戸時代, 日本史, クイズ, 歴史, 学習, 幕府, 将軍">
+  <meta name="author" content="ちょっぴ">  
+
+
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background-color: #f0f8ff;
+    }
+    h1 {
+      color: #2c6baaff;
+    }
+    p {
+      font-size: 1.1em;
+    }
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    .button:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <h1>江戸時代クイズへようこそ！</h1>
+  <p>このホームページでは、江戸時代に関する四択クイズを楽しむことができます。</p>
+  <p>歴史を学びながら、楽しく挑戦してみましょう！</p>
+  <button class="button" onclick="startQuiz()">クイズを始める</button>
+
+  <div id="quiz-container" style="display:none; background-color:#fff; padding:20px; border-radius:10px; margin-top:30px;">
+    <h2 id="question">ここに問題が表示されます</h2>
+    <div id="options"></div>
+    <button onclick="nextQuestion()" class="button">次の問題へ</button>
+  </div>
+
+  <script>
+    const quiz = [
+      { question: "江戸幕府が開かれたのは何年？", options: ["１６００年", "１６０１年", "１６０２年", "１６０３年"], answer: 3 },
+      { question: "江戸時代初期に行われた外交政策は？", options: ["鎖国政策", "中立政策", "植民地政策", "開国政策"], answer: 0 },
+      { question: "参勤交代制度を制度化した将軍は？", options: ["徳川綱吉", "徳川家光", "徳川秀忠", "徳川家康"], answer: 1 },
+      { question: "江戸と京都を結ぶ主要街道は？", options: ["甲州街道", "中山道", "東海道", "奥州街道"], answer: 2 },
+      { question: "元禄文化が栄えた時代の将軍は？", options: ["徳川慶喜", "徳川吉宗", "徳川家光", "徳川綱吉"], answer: 3 },
+      { question: "朱子学を奨励した将軍は？", options: ["徳川綱吉", "徳川家康", "徳川吉宗", "徳川家光"], answer: 0 },
+      { question: "享保の改革を行った将軍は？", options: ["徳川慶喜", "徳川吉宗", "徳川綱吉", "徳川家光"], answer: 1 },
+      { question: "田沼意次が重用された将軍は？", options: ["徳川吉宗", "徳川家光", "徳川家治", "徳川慶喜"], answer: 2 },
+      { question: "寛政の改革を行った人物は？", options: ["田沼意次", "徳川吉宗", "松平定信", "水野忠邦"], answer: 2 },
+      { question: "天保の改革を行った人物は？", options: ["徳川慶喜", "水野忠邦", "田沼意次", "松平定信"], answer: 1 }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    function startQuiz() {
+      document.querySelector("button.button").style.display = "none";
+      document.getElementById("quiz-container").style.display = "block";
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      const q = quiz[current];
+      document.getElementById("question").textContent = `Q${current + 1}: ${q.question}`;
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = "";
+      q.options.forEach((opt, i) => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.className = "button";
+        btn.style.display = "block";
+        btn.style.margin = "10px 0";
+        btn.onclick = () => checkAnswer(i);
+        optionsDiv.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(selected) {
+      if (selected === quiz[current].answer) {
+        alert("✅ 正解！");
+        score++;
+      } else {
+        alert(`❌ 不正解！正解は「${quiz[current].options[quiz[current].answer]}」です`);
+      }
+    }
+
+    function nextQuestion() {
+      current++;
+      if (current < quiz.length) {
+        loadQuestion();
+      } else {
+        document.getElementById("quiz-container").innerHTML = `<h2>終了！${quiz.length}問中 ${score}問正解でした！</h2>`;
+      }
+    }
+  </script>
+</body>
+</html>
